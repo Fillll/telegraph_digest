@@ -4,15 +4,28 @@ from pprint import pprint
 
 import yaml
 import praw
+import pymongo
 
 import utils
 
 
 HOT_LIMIT = 10
+OLD_CONTENT = pymongo.MongoClient()['telegraph_digest']['content']
 
 
 def normalization_coef(data):
     return 1 / (sum(data) / len(data))
+
+
+def was_before(url):
+    doc = {
+        'digest': 'boobs',
+        'url': url
+    }
+    if OLD_CONTENT.find(doc) is None:
+        OLD_CONTENT.insert_one(doc)
+        return False
+    return True
 
 
 def good_stufff(subs, reddit):
@@ -28,6 +41,7 @@ def good_stufff(subs, reddit):
                 'img_data': utils.do_magic(submisson)
             }
     img_and_gifs = [i for i in submissons_with_cross_scores.items() if i[1]['img_data']['type'] in [utils.TYPE_GIF, utils.TYPE_IMG]]
+    only_new = [i for i in img_and_gifs if was_before(i[1]['img_data']['url'])]
     return dict(sorted(img_and_gifs, key=lambda x: x[1]['cross_score'], reverse=True)[:HOT_LIMIT])
 
 
