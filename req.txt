@@ -3,3 +3,4 @@ pymongo
 pyyaml
 imgurpython
 telepot
+telegraph
