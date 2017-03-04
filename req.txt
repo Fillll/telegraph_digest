@@ -1,0 +1,5 @@
+praw
+pymongo
+pyyaml
+imgurpython
+telepot
