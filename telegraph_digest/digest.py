@@ -53,7 +53,7 @@ def supply(sub, config):
     return good_stufff(subs, reddit)
 
 
-def main(config_filename, sub):
+def load_posts(config_filename, sub):
     with open(config_filename) as config_file:
         config = yaml.load(config_file.read())
     return supply(sub, config)
