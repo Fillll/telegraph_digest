@@ -22,9 +22,11 @@ def was_before(url):
         'digest': 'boobs',
         'url': url
     }
-    if OLD_CONTENT.find(doc) is None:
+
+    if OLD_CONTENT.find_one(doc) is None:
         OLD_CONTENT.insert_one(doc)
         return False
+
     return True
 
 
