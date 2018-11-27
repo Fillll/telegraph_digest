@@ -32,26 +32,29 @@ def was_before(url):
 
 def good_stufff(subs, reddit):
     submissons_with_cross_scores = dict()
-    for sub in subs:
-        submissons = [s for s in reddit.subreddit(sub).hot(limit=(HOT_LIMIT * 2))]
-        scores = [s.score for s in submissons]
-        scores = [s * normalization_coef(scores) for s in scores]
-        for ind, submisson in enumerate(submissons):
-            submissons_with_cross_scores[submisson.id] = {
-                'self': submisson,
-                'cross_score': scores[ind],
-                'img_data': utils.do_magic(submisson)
-            }
-    img_and_gifs = [i for i in submissons_with_cross_scores.items() if i[1]['img_data']['type'] in [utils.TYPE_GIF, utils.TYPE_IMG]]
-    only_new = [i for i in img_and_gifs if was_before(i[1]['img_data']['url'])]
-    return dict(sorted(img_and_gifs, key=lambda x: x[1]['cross_score'], reverse=True)[:HOT_LIMIT])
+    for submission in reddit.subreddit(subs).top('month'):
+        sub_obj = {
+            'self': submission,
+            'cross_score': submission.score,
+            'img_data': utils.do_magic(submission)
+        }
+
+        if sub_obj['img_data']['type'] in [utils.TYPE_GIF, utils.TYPE_IMG]:
+            if not was_before(sub_obj['img_data']['url']):
+                submissons_with_cross_scores[submission.id] = sub_obj
+                print submission.score, sub_obj['img_data']['url']
+
+        if len(submissons_with_cross_scores) == HOT_LIMIT:
+            break
+
+    return submissons_with_cross_scores
 
 
 def supply(sub, config):
     reddit = praw.Reddit(user_agent=config['reddit']['user_agent'],
                         client_id=config['reddit']['client_id'],
                         client_secret=config['reddit']['client_secret'])
-    subs = ['boobs', 'Boobies', 'Stacked', 'BustyPetite', 'TittyDrop']
+    subs = 'boobs+Boobies+Stacked+BustyPetite+TittyDrop'
     return good_stufff(subs, reddit)
 
 
