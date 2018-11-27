@@ -42,7 +42,7 @@ def good_stufff(subs, reddit):
         if sub_obj['img_data']['type'] in [utils.TYPE_GIF, utils.TYPE_IMG]:
             if not was_before(sub_obj['img_data']['url']):
                 submissons_with_cross_scores[submission.id] = sub_obj
-                print submission.score, sub_obj['img_data']['url']
+                # print submission.score, sub_obj['img_data']['url']
 
         if len(submissons_with_cross_scores) == HOT_LIMIT:
             break
