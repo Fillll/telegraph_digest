@@ -1,0 +1,19 @@
+reddit:
+  user_agent: "python:telegraph_digest:v01 (by /u/your_username)"
+  client_id: "your_reddit_client_id"
+  client_secret: "your_reddit_client_secret"
+imgur:
+  client_id: "your_imgur_client_id"
+  client_secret: "your_imgur_client_secret"
+telegraph:
+  token: "your_telegraph_token"
+telegram:
+  token: "your_telegram_token"
+mongo:
+  host: "your_mongo_host"
+  port: 27017
+  username: "your_mongo_username"
+  password: "your_mongo_password"
+  auth_source: "admin"
+  db: "telegraph_digest"
+  collection: "content"
