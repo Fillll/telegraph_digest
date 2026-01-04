@@ -7,7 +7,7 @@ from digest import load_posts
 
 
 def create_article(posts, config_name):
-    token = yaml.load(open(config_name).read())['telegraph']['token']
+    token = yaml.safe_load(open(config_name).read())['telegraph']['token']
     telegraph = Telegraph(token)
     content_list = []
     for number, post in enumerate(posts.values()):

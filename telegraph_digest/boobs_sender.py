@@ -7,7 +7,7 @@ from digest import load_posts
 
 def send_boobs_to_chat(chat_id):
     config_name = 'prod.yml'
-    token = yaml.load(open(config_name).read())['telegram']['token']
+    token = yaml.safe_load(open(config_name).read())['telegram']['token']
     bot = telepot.Bot(token)
     posts = load_posts(config_name, None)
     url = create_article(posts, config_name)

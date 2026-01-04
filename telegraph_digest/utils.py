@@ -73,7 +73,7 @@ def get_url(submission, mp4_instead_gif=False):
 
     if urlparse(url).netloc == 'imgur.com':
         # Imgur
-        imgur_config = yaml.load(open('prod.yml').read())
+        imgur_config = yaml.safe_load(open('prod.yml').read())
         imgur_client = ImgurClient(imgur_config['imgur']['client_id'], imgur_config['imgur']['client_secret'])
         path_parts = urlparse(url).path.split('/')
         if path_parts[1] == 'gallery':
